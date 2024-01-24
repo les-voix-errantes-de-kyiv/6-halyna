@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import GUI from 'lil-gui'
 import gsap from 'gsap'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /**
  * Debug
@@ -8,7 +9,8 @@ import gsap from 'gsap'
 const gui = new GUI()
 
 const parameters = {
-    materialColor: '#ffeded'
+    materialColor: '#262626',
+    particleColor: '#6D6D6D'
 }
 
 gui
@@ -18,6 +20,8 @@ gui
         material.color.set(parameters.materialColor)
         particlesMaterial.color.set(parameters.materialColor)
     })
+
+// glb loader 
 
 /**
  * Base
@@ -35,6 +39,23 @@ const scene = new THREE.Scene()
 const textureLoader = new THREE.TextureLoader()
 const gradientTexture = textureLoader.load('textures/gradients/3.jpg')
 gradientTexture.magFilter = THREE.NearestFilter
+
+const rootLoader = new GLTFLoader();
+
+
+rootLoader.load(
+    '/models/racine.glb',
+    (gltf) => {
+        console.log("c'est bon c load");
+        gltf.castShadow = true;
+        gltf.receiveShadow = true;
+        scene.add(gltf.scene);
+        gltf.scene.rotation.y = - Math.PI / 2;
+        gltf.scene.scale.set(0.3, 0.3, 0.3);
+        gltf.scene.position.y = - 1;
+    }
+)
+
 
 // Material
 const material = new THREE.MeshToonMaterial({
@@ -79,14 +100,13 @@ scene.add(directionalLight)
 /**
  * Particles
  */
-// Geometry
-const particlesCount = 200
-const positions = new Float32Array(particlesCount * 3)
+const particlesCount = 500
+const positions = new Float32Array(particlesCount * 4)
 
 for(let i = 0; i < particlesCount; i++)
 {
-    positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * sectionMeshes.length
+    positions[i * 3 + 0] = (Math.random() - 0.5) * 6
+    positions[i * 3 + 1] = objectsDistance * 1 - Math.random() * objectsDistance * sectionMeshes.length
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 
@@ -95,9 +115,9 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 
 // Material
 const particlesMaterial = new THREE.PointsMaterial({
-    color: parameters.materialColor,
+    color: parameters.particleColor,
     sizeAttenuation: true,
-    size: 0.03
+    size: 0.04
 })
 
 // Points
@@ -135,7 +155,7 @@ const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 6   )
 camera.position.z = 6
 cameraGroup.add(camera)
 

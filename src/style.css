@@ -4,33 +4,46 @@
     padding: 0;
 }
 
-html
-{
-    background: #1e1a20;
-}
-
 .webgl
 {
     position: fixed;
     top: 0;
     left: 0;
     outline: none;
+    width: 100vw;
+    height: 100vh;
+}
+
+html, body
+{
+    background: #EFFFF9;
 }
 
 
-.section
+section
 {
     display: flex;
     align-items: center;
     height: 100vh;
     position: relative;
     font-family: 'Cabin', sans-serif;
-    color: #ffeded;
     text-transform: uppercase;
     font-size: 7vmin;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    p 
+    {
+        color: #ff0000;
+        
+    }
+
+    p.yellow
+    {
+        color: yellow;
+    }
 }
+
 
 section:nth-child(odd)
 {
