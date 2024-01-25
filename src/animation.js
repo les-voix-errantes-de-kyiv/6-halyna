@@ -19,3 +19,29 @@ splitTypes.forEach((char, i) => {
     stagger: 0.1,
   })
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+  const body = document.body;
+
+  // Function to update background color based on scroll position
+  function updateBackgroundColor() {
+    const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    
+    // Calculate color based on scroll position
+    const startColor = [157, 217, 156];
+    const endColor = [206, 225, 205];
+
+    const currentColor = startColor.map((start, index) => {
+      const end = endColor[index];
+      const colorValue = Math.round(start + (end - start) * (scrollPercentage / 100));
+      return colorValue;
+    });
+
+    const backgroundColor = `rgb(${currentColor.join(', ')})`;
+
+    body.style.backgroundColor = backgroundColor;
+  }
+
+  // Listen to the scroll event and update background color
+  window.addEventListener('scroll', updateBackgroundColor);
+});

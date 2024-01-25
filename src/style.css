@@ -20,6 +20,8 @@ html, body
 {
     background: #021810;
     color: #fff;
+    transition: background-color 0.1s ease; /* Adjust the transition speed as needed */
+    margin: 0; /* Remove default body margin */
 }
 
 h1 
