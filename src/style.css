@@ -19,7 +19,7 @@
 html, body
 {
     background: #021810;
-    text-color: #fff;
+    color: #fff;
 }
 
 h1 
@@ -54,7 +54,6 @@ section
     font-size: 7vmin;
     padding-left: 10px;
     padding-right: 10px;
-    color: #fff;
 
     p.yellow
     {
@@ -79,7 +78,7 @@ section
 
 .arrow {
     border-radius: 25%;
-    border: 5px solid;
+    border: 3px solid;
     border-color: #374F46;
     position: relative;
     display: flex;
@@ -97,6 +96,7 @@ section
 }
 p 
 {
+    word-break: normal;
     font-family: 'Montserrat', sans-serif;
 }
 

@@ -44,7 +44,7 @@ rootLoader.load(
         scene.add(gltf.scene);
         gltf.scene.rotation.y = - Math.PI / 2;
         gltf.scene.scale.set(0.3, 0.3, 0.3);
-        gltf.scene.position.y = - 1;
+        gltf.scene.position.y = - 0.6;
         loadedObjects.push(gltf.scene);
     }
 )
@@ -68,32 +68,9 @@ const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
 directionalLight.position.set(1, 1, 0)
 scene.add(directionalLight)
 
-/**
- * Particles
- */
-const particlesCount = 500
-const positions = new Float32Array(particlesCount * 4)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Color: white, Intensity: 0.5
+scene.add(ambientLight);
 
-for(let i = 0; i < particlesCount; i++)
-{
-    positions[i * 3 + 0] = (Math.random() - 0.5) * 6
-    positions[i * 3 + 1] = 4 * 1 - Math.random() * 4 * sectionMeshes.length
-    positions[i * 3 + 2] = (Math.random() - 0.5) * 10
-}
-
-const particlesGeometry = new THREE.BufferGeometry()
-particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-
-// Material
-const particlesMaterial = new THREE.PointsMaterial({
-    color: parameters.particleColor,
-    sizeAttenuation: true,
-    size: 0.04
-})
-
-// Points
-const particles = new THREE.Points(particlesGeometry, particlesMaterial)
-scene.add(particles)
 
 /**
  * Sizes
@@ -126,7 +103,7 @@ const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100   )
+const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 5)
 camera.position.z = 6
 cameraGroup.add(camera)
 
