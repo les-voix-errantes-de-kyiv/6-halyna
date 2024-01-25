@@ -7,20 +7,11 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 /**
  * Debug
  */
-const gui = new GUI()
 
 const parameters = {
     materialColor: '#262626',
     particleColor: '#6D6D6D'
 }
-
-gui
-    .addColor(parameters, 'materialColor')
-    .onChange(() =>
-    {
-        material.color.set(parameters.materialColor)
-        particlesMaterial.color.set(parameters.materialColor)
-    })
 
 // glb loader 
 
