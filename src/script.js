@@ -34,12 +34,11 @@ gradientTexture.magFilter = THREE.NearestFilter
 
 const rootLoader = new GLTFLoader();
 
-let loadedObjects = []
+let loadedObjects = [];
 
 rootLoader.load(
     '/models/racine.glb',
     (gltf) => {
-        console.log("c'est bon c load");
         gltf.castShadow = true;
         gltf.receiveShadow = true;
         scene.add(gltf.scene);
@@ -57,29 +56,6 @@ const material = new THREE.MeshToonMaterial({
     gradientMap: gradientTexture
 })
 
-
-// Objects
-const objectsDistance = 4
-const mesh1 = new THREE.Mesh(
-    new THREE.TorusGeometry(1, 0.4, 16, 60),
-    material
-)
-const mesh2 = new THREE.Mesh(
-    new THREE.ConeGeometry(1, 2, 32),
-    material
-)
-const mesh3 = new THREE.Mesh(
-    new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
-    material
-)
-
-mesh1.position.x = 2
-mesh2.position.x = - 2
-mesh3.position.x = 2
-
-mesh1.position.y = - objectsDistance * 0
-mesh2.position.y = - objectsDistance * 1
-mesh3.position.y = - objectsDistance * 2
 
 scene.add(loadedObjects[0])
 
@@ -101,7 +77,7 @@ const positions = new Float32Array(particlesCount * 4)
 for(let i = 0; i < particlesCount; i++)
 {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 6
-    positions[i * 3 + 1] = objectsDistance * 1 - Math.random() * objectsDistance * sectionMeshes.length
+    positions[i * 3 + 1] = 4 * 1 - Math.random() * 4 * sectionMeshes.length
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 

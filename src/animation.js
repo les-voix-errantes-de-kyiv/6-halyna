@@ -15,7 +15,7 @@ splitTypes.forEach((char, i) => {
       end: 'top 20%',
       scrub: true,
     },
-    opacity: 0,
+    opacity: 0.2,
     stagger: 0.1,
   })
 })
