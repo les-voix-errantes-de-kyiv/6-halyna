@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
 import GUI from 'lil-gui'
 import gsap from 'gsap'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
@@ -42,6 +43,7 @@ gradientTexture.magFilter = THREE.NearestFilter
 
 const rootLoader = new GLTFLoader();
 
+let loadedObjects = []
 
 rootLoader.load(
     '/models/racine.glb',
@@ -53,6 +55,7 @@ rootLoader.load(
         gltf.scene.rotation.y = - Math.PI / 2;
         gltf.scene.scale.set(0.3, 0.3, 0.3);
         gltf.scene.position.y = - 1;
+        loadedObjects.push(gltf.scene);
     }
 )
 
@@ -62,6 +65,7 @@ const material = new THREE.MeshToonMaterial({
     color: parameters.materialColor,
     gradientMap: gradientTexture
 })
+
 
 // Objects
 const objectsDistance = 4
@@ -86,9 +90,9 @@ mesh1.position.y = - objectsDistance * 0
 mesh2.position.y = - objectsDistance * 1
 mesh3.position.y = - objectsDistance * 2
 
-scene.add(mesh1, mesh2, mesh3)
+scene.add(loadedObjects[0])
 
-const sectionMeshes = [ mesh1, mesh2, mesh3 ]
+const sectionMeshes = loadedObjects
 
 /**
  * Lights
@@ -155,7 +159,7 @@ const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 6   )
+const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100   )
 camera.position.z = 6
 cameraGroup.add(camera)
 
@@ -180,21 +184,8 @@ window.addEventListener('scroll', () =>
     scrollY = window.scrollY
     const newSection = Math.round(scrollY / sizes.height)
 
-    if(newSection != currentSection)
-    {
-        currentSection = newSection
+    cameraGroup.position.z = -scrollY / sizes.width;
 
-        gsap.to(
-            sectionMeshes[currentSection].rotation,
-            {
-                duration: 1.5,
-                ease: 'power2.inOut',
-                x: '+=6',
-                y: '+=3',
-                z: '+=1.5'
-            }
-        )
-    }
 })
 
 /**
@@ -204,11 +195,6 @@ const cursor = {}
 cursor.x = 0
 cursor.y = 0
 
-window.addEventListener('mousemove', (event) =>
-{
-    cursor.x = event.clientX / sizes.width - 0.5
-    cursor.y = event.clientY / sizes.height - 0.5
-})
 
 /**
  * Animate
@@ -223,19 +209,7 @@ const tick = () =>
     previousTime = elapsedTime
 
     // Animate camera
-    camera.position.y = - scrollY / sizes.height * objectsDistance
-
-    const parallaxX = cursor.x * 0.5
-    const parallaxY = - cursor.y * 0.5
-    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
-    cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
-
-    // Animate meshes
-    for(const mesh of sectionMeshes)
-    {
-        mesh.rotation.x += deltaTime * 0.1
-        mesh.rotation.y += deltaTime * 0.12
-    }
+    // camera.position.y = - scrollY / sizes.height * objectsDistance
 
     // Render
     renderer.render(scene, camera)
