@@ -18,9 +18,9 @@
 
 html, body
 {
-    background: #021810;
-    color: #fff;
-    transition: background-color 0.1s ease; /* Adjust the transition speed as needed */
+    background: #9DD99C;
+    color: #021810;
+    transition: background-color 1s ease; /* Adjust the transition speed as needed */
     margin: 0; /* Remove default body margin */
 }
 
