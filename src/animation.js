@@ -7,8 +7,8 @@ gsap.registerPlugin(ScrollTrigger)
 const splitTypes = document.querySelectorAll('.reveal')
 
 splitTypes.forEach((char, i) => {
-  const text = new SplitType(char, { types: 'chars' })
-  gsap.from(text.chars, {
+  const text = new SplitType(char, { types: 'words' })
+  gsap.from(text.words, {
     scrollTrigger: {
       trigger: char,
       start: 'top 50%',
