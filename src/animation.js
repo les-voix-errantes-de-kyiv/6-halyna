@@ -16,7 +16,12 @@ const translations = {
   }
 };
 
+document.addEventListener('DOMContentLoaded', function() {
+  const body = document.body;
 
+  // Function to update background color based on scroll position
+  function updateBackgroundColor() {
+    const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
   // Fonction pour mettre à jour le contenu basé sur la langue
 const updateLanguage = (language)=> {
   console.log(language);
@@ -40,14 +45,25 @@ const updateLanguage = (language)=> {
       stagger: 0.1,
     })
     
+    // Calculate color based on scroll position
+    const startColor = [157, 217, 156];
+    const endColor = [206, 225, 205];
   });
 
+    const currentColor = startColor.map((start, index) => {
+      const end = endColor[index];
+      const colorValue = Math.round(start + (end - start) * (scrollPercentage / 100));
+      return colorValue;
+    });
 }
 
+    const backgroundColor = `rgb(${currentColor.join(', ')})`;
 const lang = new URL(window.location.href).searchParams.get('lang');
   // Définir la langue initiale
   updateLanguage(lang ?? 'fr');
 
+    body.style.backgroundColor = backgroundColor;
+  }
 document.getElementById('text-fr').addEventListener('click', () => {
   const searchParams = new URLSearchParams(window.location.search);
   searchParams.set("lang", "fr");
@@ -59,6 +75,9 @@ document.getElementById('text-uk').addEventListener('click', () =>{
   window.location.search = searchParams.toString();
 });
 
+  // Listen to the scroll event and update background color
+  window.addEventListener('scroll', updateBackgroundColor);
+});
 
 
 document.addEventListener('DOMContentLoaded', function() {
