@@ -111,7 +111,9 @@ let currentSection = 0
 
 const animationCameraPos = gsap.to(cameraGroup.position, {
     keyframes: {
-        "0%": { z: 0 },
+        "0%": { z: 0, x: 0 },
+        "20%": {  x: 0 },
+        "37%": { x: 0.22181 },
         "100%": { z: -42 }
     },
     duration: 4,
@@ -127,8 +129,8 @@ const animationCameraRot = gsap.to(cameraGroup.rotation, {
         "46%": { y: Math.PI * -0.0125},
         "36%": { x: 0.01473},
         "53%": { x: Math.PI * 0.025},
-        "82%": { x: Math.PI * 0.025},
-        "100%": { x: Math.PI * 0.125},
+        "82%": { y: Math.PI * -0.0125, x: Math.PI * -0.025},
+        "100%": { y: Math.PI * -0.0225, x: Math.PI * 0.125},
     },
     duration: 4,
     paused: true,

@@ -4,6 +4,15 @@
     padding: 0;
 }
 
+.vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
+  }
+
 .webgl
 {
     position: fixed;
@@ -101,10 +110,5 @@ p
     text-justify: unset;
     word-break: normal;
     font-family: 'Montserrat', sans-serif;
-}
-
-section:nth-child(odd)
-{
-    justify-content: flex-end;
 }
 
