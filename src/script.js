@@ -29,12 +29,10 @@ const manager = new THREE.LoadingManager();
 let isLoaded = false;
 
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-	console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
     isLoaded = false;
 };
 
 manager.onLoad = function ( ) {
-	console.log( 'Loading complete!');
     isLoaded = true;
     document.querySelector('.loading').classList.add('hidden');
 }
@@ -58,8 +56,6 @@ rootLoader.load(
 )
 
 scene.add(loadedObjects[0])
-
-const sectionMeshes = loadedObjects
 
 /**
  * Lights
@@ -157,15 +153,9 @@ function avancerAnimation(pourcentage) {
 
 window.addEventListener('scroll', () => {
     scrollY = window.scrollY
-    const newSection = Math.round(scrollY / sizes.height)
 
     // cameraGroup.position.z = -scrollY / sizes.width;
-    console.log("Z:" + cameraGroup.position.z + " X:" + cameraGroup.position.x + " Y:" + cameraGroup.position.y);
-    console.log("rotateZ:" + cameraGroup.rotation.z + " rotateX:" + cameraGroup.rotation.x + " rotateY:" + cameraGroup.rotation.y);
-    console.log("AnimPercent :" + animationCameraPos.progress() * 100);
     avancerAnimation(scrollY / 225);
-
-
 
 })
 
