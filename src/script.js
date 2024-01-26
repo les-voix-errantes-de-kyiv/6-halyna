@@ -31,7 +31,7 @@ const rootLoader = new GLTFLoader();
 let loadedObjects = [];
 
 rootLoader.load(
-    '/models/racine-1.glb',
+    '/models/racine.glb',
     (gltf) => {
         gltf.castShadow = true;
         gltf.receiveShadow = true;
@@ -66,8 +66,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -89,7 +88,7 @@ const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 5)
+const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 9)
 camera.position.z = 1
 camera.rotation.x = - 0.1
 cameraGroup.add(camera)
@@ -110,12 +109,47 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 let scrollY = window.scrollY
 let currentSection = 0
 
-window.addEventListener('scroll', () =>
-{
+const animationCameraPos = gsap.to(cameraGroup.position, {
+    keyframes: {
+        "0%": { z: 0 },
+        "100%": { z: -42 }
+    },
+    duration: 4,
+    paused: true,
+});
+const animationCameraRot = gsap.to(cameraGroup.rotation, {
+    keyframes: {
+        "0%": { y: 0, x: Math.PI * -0.0125},
+        "21%": { y: 0.066329},
+        "27%": { x: 0},
+        "30%": { x: 0.01473},
+        "32%": { y: 0.066329},
+        "46%": { y: Math.PI * -0.0125},
+        "36%": { x: 0.01473},
+        "53%": { x: Math.PI * 0.025},
+        "82%": { x: Math.PI * 0.025},
+        "100%": { x: Math.PI * 0.125},
+    },
+    duration: 4,
+    paused: true,
+});
+
+function avancerAnimation(pourcentage) {
+    animationCameraPos.progress(pourcentage / 100);
+    animationCameraRot.progress(pourcentage / 100);
+}
+
+window.addEventListener('scroll', () => {
     scrollY = window.scrollY
     const newSection = Math.round(scrollY / sizes.height)
 
-    cameraGroup.position.z = -scrollY / sizes.width;
+    // cameraGroup.position.z = -scrollY / sizes.width;
+    console.log("Z:" + cameraGroup.position.z + " X:" + cameraGroup.position.x + " Y:" + cameraGroup.position.y);
+    console.log("rotateZ:" + cameraGroup.rotation.z + " rotateX:" + cameraGroup.rotation.x + " rotateY:" + cameraGroup.rotation.y);
+    console.log("AnimPercent :" + animationCameraPos.progress() * 100);
+    avancerAnimation(scrollY / 225);
+
+
 
 })
 
@@ -133,8 +167,7 @@ cursor.y = 0
 const clock = new THREE.Clock()
 let previousTime = 0
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime

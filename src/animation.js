@@ -20,28 +20,28 @@ splitTypes.forEach((char, i) => {
   })
 })
 
-// document.addEventListener('DOMContentLoaded', function() {
-//   const body = document.body;
+document.addEventListener('DOMContentLoaded', function() {
+  const body = document.body;
 
-//   // Function to update background color based on scroll position
-//   function updateBackgroundColor() {
-//     const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  // Function to update background color based on scroll position
+  function updateBackgroundColor() {
+    const scrollPercentage = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
     
-//     // Calculate color based on scroll position
-//     const startColor = [157, 217, 156];
-//     const endColor = [206, 225, 205];
+    // Calculate color based on scroll position
+    const startColor = [157, 217, 156];
+    const endColor = [206, 225, 205];
 
-//     const currentColor = startColor.map((start, index) => {
-//       const end = endColor[index];
-//       const colorValue = Math.round(start + (end - start) * (scrollPercentage / 100));
-//       return colorValue;
-//     });
+    const currentColor = startColor.map((start, index) => {
+      const end = endColor[index];
+      const colorValue = Math.round(start + (end - start) * (scrollPercentage / 100));
+      return colorValue;
+    });
 
-//     const backgroundColor = `rgb(${currentColor.join(', ')})`;
+    const backgroundColor = `rgb(${currentColor.join(', ')})`;
 
-//     body.style.backgroundColor = backgroundColor;
-//   }
+    body.style.backgroundColor = backgroundColor;
+  }
 
-//   // Listen to the scroll event and update background color
-//   window.addEventListener('scroll', updateBackgroundColor);
-// });
+  // Listen to the scroll event and update background color
+  window.addEventListener('scroll', updateBackgroundColor);
+});
