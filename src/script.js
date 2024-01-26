@@ -1,19 +1,9 @@
 import * as THREE from 'three'
-import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import GUI from 'lil-gui'
 import gsap from 'gsap'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-/**
- * Debug
- */
-
-const parameters = {
-    materialColor: '#262626',
-    particleColor: '#6D6D6D'
-}
-
-// glb loader 
 
 /**
  * Base
@@ -32,12 +22,16 @@ const textureLoader = new THREE.TextureLoader()
 const gradientTexture = textureLoader.load('textures/gradients/3.jpg')
 gradientTexture.magFilter = THREE.NearestFilter
 
+// const dracoLoader = new DRACOLoader();
+// dracoLoader.setDecoderPath('/draco/');
+
 const rootLoader = new GLTFLoader();
+// rootLoader.setDRACOLoader(dracoLoader);
 
 let loadedObjects = [];
 
 rootLoader.load(
-    '/models/racine.glb',
+    '/models/racine-1.glb',
     (gltf) => {
         gltf.castShadow = true;
         gltf.receiveShadow = true;
@@ -48,14 +42,6 @@ rootLoader.load(
         loadedObjects.push(gltf.scene);
     }
 )
-
-
-// Material
-const material = new THREE.MeshToonMaterial({
-    color: parameters.materialColor,
-    gradientMap: gradientTexture
-})
-
 
 scene.add(loadedObjects[0])
 
@@ -68,7 +54,7 @@ const directionalLight = new THREE.DirectionalLight('#ffffff', 3)
 directionalLight.position.set(1, 1, 0)
 scene.add(directionalLight)
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // Color: white, Intensity: 0.5
+const ambientLight = new THREE.AmbientLight(0xffffff, 1); // Color: white, Intensity: 0.5
 scene.add(ambientLight);
 
 
@@ -104,7 +90,8 @@ scene.add(cameraGroup)
 
 // Base camera
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 5)
-camera.position.z = 6
+camera.position.z = 1
+camera.rotation.x = - 0.1
 cameraGroup.add(camera)
 
 /**
