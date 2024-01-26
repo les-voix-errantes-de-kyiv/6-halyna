@@ -16,6 +16,47 @@ const translations = {
   }
 };
 
+const updateLanguage = (language)=> {
+  console.log(language);
+
+  const reveals = document.querySelectorAll('.reveal')
+  
+  reveals.forEach((element, index) => {
+    console.log(element.innerHTML)
+    element.innerHTML = translations[language][`text${index + 1}`];
+    console.log(element.innerHTML);
+
+    const text = new SplitType(element, { types: 'words' })
+    gsap.from(text.words, {
+      scrollTrigger: {
+        trigger: element,
+        start: 'top 50%',
+        end: 'top 20%',
+        scrub: true,
+      },
+      opacity: 0.2,
+      stagger: 0.1,
+    })
+    
+  });
+
+}
+
+const lang = new URL(window.location.href).searchParams.get('lang');
+  // Définir la langue initiale
+  updateLanguage(lang ?? 'fr');
+
+document.getElementById('text-fr').addEventListener('click', () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.set("lang", "fr");
+  window.location.search = searchParams.toString();
+});
+document.getElementById('text-uk').addEventListener('click', () =>{
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.set("lang", "uk");
+  window.location.search = searchParams.toString();
+});
+
 document.addEventListener('DOMContentLoaded', function() {
   const body = document.body;
 
