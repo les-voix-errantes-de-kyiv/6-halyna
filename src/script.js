@@ -25,7 +25,21 @@ gradientTexture.magFilter = THREE.NearestFilter
 // const dracoLoader = new DRACOLoader();
 // dracoLoader.setDecoderPath('/draco/');
 
-const rootLoader = new GLTFLoader();
+const manager = new THREE.LoadingManager();
+let isLoaded = false;
+
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+	console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+    isLoaded = false;
+};
+
+manager.onLoad = function ( ) {
+	console.log( 'Loading complete!');
+    isLoaded = true;
+    document.querySelector('.loading').classList.add('hidden');
+}
+
+const rootLoader = new GLTFLoader(manager);
 // rootLoader.setDRACOLoader(dracoLoader);
 
 let loadedObjects = [];

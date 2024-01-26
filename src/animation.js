@@ -120,6 +120,21 @@ document.getElementById('text-uk').addEventListener('click', () =>{
   window.addEventListener('scroll', updateBackgroundColor);
 });
 
+const splitTypes = document.querySelectorAll('.reveal')
+
+splitTypes.forEach((char, i) => {
+  const text = new SplitType(char, { types: 'words' })
+  gsap.from(text.words, {
+    scrollTrigger: {
+      trigger: char,
+      start: 'top 35%',
+      end: 'top 5%',
+      scrub: true,
+    },
+    opacity: 0,
+    stagger: 0.1,
+  })
+})
 
 document.addEventListener('DOMContentLoaded', function() {
   const body = document.body;
