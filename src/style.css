@@ -6,10 +6,10 @@
 
 .vignette {
     position: fixed;
-    top: 0;
+    top: -15vh;
     left: 0;
     width: 100svw;
-    height: 100svh;
+    height: 130svh;
     box-shadow: 0 0 200px rgba(0,0,0,0.9) inset;
     z-index: 12;
     pointer-events: none;
